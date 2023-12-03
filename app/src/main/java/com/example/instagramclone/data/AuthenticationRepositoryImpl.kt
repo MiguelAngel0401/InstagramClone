@@ -4,8 +4,6 @@ import com.example.instagramclone.domain.model.User
 import com.example.instagramclone.domain.repository.AuthenticationRepository
 import com.example.instagramclone.util.Constants
 import com.example.instagramclone.util.Response
-import com.google.android.play.core.integrity.e
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -72,7 +70,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
             emit(Response.Loading)
             auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener{
                 operationSuccessful = true
-            }
+            }.await()
             if (operationSuccessful){
                 val userid = auth.currentUser?.uid!!
                 val obj = User(userName = userName, userid = userid,password = password, email = email)
