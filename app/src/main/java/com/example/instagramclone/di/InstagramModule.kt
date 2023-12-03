@@ -1,13 +1,18 @@
 package com.example.instagramclone.di
 
 import com.example.instagramclone.data.AuthenticationRepositoryImpl
+import com.example.instagramclone.data.UserRepositoryImpl
 import com.example.instagramclone.domain.repository.AuthenticationRepository
-import com.example.instagramclone.domain.use_cases.AuthenticationUseCases
-import com.example.instagramclone.domain.use_cases.FirebaseAuthState
-import com.example.instagramclone.domain.use_cases.FirebaseSignIn
-import com.example.instagramclone.domain.use_cases.FirebaseSignOut
-import com.example.instagramclone.domain.use_cases.FirebaseSignUp
-import com.example.instagramclone.domain.use_cases.IsUserAuthenticated
+import com.example.instagramclone.domain.repository.UserRepository
+import com.example.instagramclone.domain.use_cases.AuthenticationUseCases.AuthenticationUseCases
+import com.example.instagramclone.domain.use_cases.AuthenticationUseCases.FirebaseAuthState
+import com.example.instagramclone.domain.use_cases.AuthenticationUseCases.FirebaseSignIn
+import com.example.instagramclone.domain.use_cases.AuthenticationUseCases.FirebaseSignOut
+import com.example.instagramclone.domain.use_cases.AuthenticationUseCases.FirebaseSignUp
+import com.example.instagramclone.domain.use_cases.AuthenticationUseCases.IsUserAuthenticated
+import com.example.instagramclone.domain.use_cases.UserUseCases.GetUserDetails
+import com.example.instagramclone.domain.use_cases.UserUseCases.SetUserDetails
+import com.example.instagramclone.domain.use_cases.UserUseCases.UserUseCases
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -51,5 +56,16 @@ object InstagramModule {
         firebaseSignOut = FirebaseSignOut(repository = repository),
         firebaseSignIn = FirebaseSignIn(repository = repository),
         firebaseSignUp = FirebaseSignUp(repository = repository)
+    )
+    @Singleton
+    @Provides
+    fun providesUserRepository(firebaseFirestore: FirebaseFirestore):UserRepository{
+        return UserRepositoryImpl(firebaseFirestore = firebaseFirestore)
+    }
+    @Singleton
+    @Provides
+    fun providesUserUseCases(repository: UserRepository)=UserUseCases(
+        getUserDetails = GetUserDetails(repository = repository),
+        setUserDetails = SetUserDetails(repository = repository)
     )
 }

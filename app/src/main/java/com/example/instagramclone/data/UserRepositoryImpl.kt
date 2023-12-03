@@ -1,6 +1,5 @@
 package com.example.instagramclone.data
 
-import androidx.compose.runtime.mutableStateOf
 import com.example.instagramclone.domain.model.User
 import com.example.instagramclone.domain.repository.UserRepository
 import com.example.instagramclone.util.Response
@@ -9,11 +8,13 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore
 ): UserRepository {
+    private var operationSuccessful = false
     override fun getUserDetails(userid:String): Flow<Response<User>> = callbackFlow {
         Response.Loading
         val snapshotListener = firebaseFirestore.collection("users")
@@ -40,6 +41,7 @@ class UserRepositoryImpl @Inject constructor(
         bio: String,
         websiteUrl: String,
     ): Flow<Response<Boolean>> = flow {
+        operationSuccessful = false
         try{
             val userObj = mutableMapOf<String,String>()
             userObj["name"] = name
@@ -47,7 +49,15 @@ class UserRepositoryImpl @Inject constructor(
             userObj["bio"] = bio
             userObj["websiteUrl"] = websiteUrl
             firebaseFirestore.collection("users").document(userid).update(userObj as Map<String, Any>)
+                .addOnSuccessListener {
 
+                }.await()
+            if (operationSuccessful){
+                emit(Response.Success(operationSuccessful))
+            }
+            else{
+                emit(Response.Error("Edit Does nit Succed"))
+            }
         }
         catch (e:Exception){
             Response.Error(e.localizedMessage?:"An Unexpected Error")

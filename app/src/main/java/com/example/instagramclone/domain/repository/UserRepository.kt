@@ -12,5 +12,5 @@ interface UserRepository {
           username:String,
           bio:String,
           websiteUrl:String
-     )
+     ): Flow<Response<Boolean>>
 }

@@ -1,13 +1,11 @@
 package com.example.instagramclone.presentation.Authentication
 
-import android.provider.ContactsContract.CommonDataKinds.Email
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.instagramclone.domain.use_cases.AuthenticationUseCases
+import com.example.instagramclone.domain.use_cases.AuthenticationUseCases.AuthenticationUseCases
 import com.example.instagramclone.util.Response
-import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
