@@ -1,4 +1,4 @@
-package com.example.instagramclone.presentation.Profile
+package com.example.instagramclone.presentation.Main
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -44,7 +44,7 @@ class UserViewModel @Inject constructor(
                     bio = bio,
                     websiteUrl = websiteUrl
                 ).collect {
-                    _setUserData.value = It
+                    _setUserData.value = it
                 }
             }
         }

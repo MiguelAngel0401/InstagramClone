@@ -1,6 +1,6 @@
 package com.example.instagramclone.presentation.Authentication
 
-import android.text.Layout.Alignment
+
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -24,6 +24,7 @@ import com.example.instagramclone.R
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.instagramclone.util.Response
 import com.example.instagramclone.util.Screens
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)

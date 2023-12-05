@@ -14,23 +14,21 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.instagramclone.util.Screens
-import org.checkerframework.common.subtyping.qual.Bottom
 
-enum class BotomNavigationItem(val icon: ImageVector, val route : Screens){
+enum class BottomNavigationItem(val icon: ImageVector, val route : Screens){
     FEED(Icons.Default.Home,Screens.FeedsScreen),
-    SEARCH(Icons.Default.Search,Screen. SearchScreen ),
-    PROFILE(Icons.Default.Person, Screen.ProfileScreen)
+    SEARCH(Icons.Default.Search,Screens.SearchScreen ),
+    PROFILE(Icons.Default.Person, Screens.ProfileScreen)
 }
 @Composable
-fun  BotomNavigationMenu(
-    selectedItem : BotomNavigationItem,navController: NavController
+fun  BottomNavigationMenu(
+    selectedItem : BottomNavigationItem,navController: NavController
 ){
     Row(modifier = Modifier.fillMaxWidth().wrapContentHeight().background(Color.White)){
         for (item in BottomNavigationItem.values()){
