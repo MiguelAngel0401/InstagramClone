@@ -1,8 +1,10 @@
 package com.example.instagramclone.di
 
 import com.example.instagramclone.data.AuthenticationRepositoryImpl
+import com.example.instagramclone.data.PostRepositoryImpl
 import com.example.instagramclone.data.UserRepositoryImpl
 import com.example.instagramclone.domain.repository.AuthenticationRepository
+import com.example.instagramclone.domain.repository.PostRepository
 import com.example.instagramclone.domain.repository.UserRepository
 import com.example.instagramclone.domain.use_cases.AuthenticationUseCases.AuthenticationUseCases
 import com.example.instagramclone.domain.use_cases.AuthenticationUseCases.FirebaseAuthState
@@ -10,6 +12,9 @@ import com.example.instagramclone.domain.use_cases.AuthenticationUseCases.Fireba
 import com.example.instagramclone.domain.use_cases.AuthenticationUseCases.FirebaseSignOut
 import com.example.instagramclone.domain.use_cases.AuthenticationUseCases.FirebaseSignUp
 import com.example.instagramclone.domain.use_cases.AuthenticationUseCases.IsUserAuthenticated
+import com.example.instagramclone.domain.use_cases.PostUseCases.GetAllPosts
+import com.example.instagramclone.domain.use_cases.PostUseCases.PostsUseCases
+import com.example.instagramclone.domain.use_cases.PostUseCases.UploadPost
 import com.example.instagramclone.domain.use_cases.UserUseCases.GetUserDetails
 import com.example.instagramclone.domain.use_cases.UserUseCases.SetUserDetails
 import com.example.instagramclone.domain.use_cases.UserUseCases.UserUseCases
@@ -67,5 +72,14 @@ object InstagramModule {
     fun providesUserUseCases(repository: UserRepository)=UserUseCases(
         getUserDetails = GetUserDetails(repository = repository),
         setUserDetails = SetUserDetails(repository = repository)
+    )
+    @Provides
+    @Singleton
+    fun providesPostRepository(firebaseFirestore:FirebaseFirestore):PostRepository{
+        return PostRepositoryImpl(firebaseFirestore = firebaseFirestore)
+    }
+    fun providePostsUseCases(repository: PostRepository)= PostsUseCases(
+        getAllPosts = GetAllPosts(repository = repository),
+        uploadPost = UploadPost(repository = repository)
     )
 }
